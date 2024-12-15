@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Container } from "react-bootstrap";
-import { Transition } from "react-transition-group";
+import { Transition } from "../react-transition-group/";
 
 //动画的持续时间
 const duration = 1000;
@@ -22,11 +22,13 @@ function TransitionPage() {
   return (
     <Container>
       <Transition in={inProp} timeout={duration}>
-        {(state) => (
-          <Button style={{ ...defaultStyle, ...transitionStyles[state] }}>
-            {state}
-          </Button>
-        )}
+        {(state) => {
+          return (
+            <Button style={{ ...defaultStyle, ...transitionStyles[state] }}>
+              {state}
+            </Button>
+          );
+        }}
       </Transition>
       <br />
       <button onClick={() => setInProp(!inProp)}>
