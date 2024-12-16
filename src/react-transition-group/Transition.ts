@@ -1,4 +1,5 @@
 import React from "react";
+import TransitionGroupContext from "./TransitionGroupContext";
 
 export const ENTERING = "entering"; //进入中
 export const ENTERED = "entered"; //进入后
@@ -6,11 +7,22 @@ export const EXITING = "exiting"; //退出中
 export const EXITED = "exited"; //退出后
 
 class Transition extends React.Component {
+  static contextType = TransitionGroupContext;
+
   constructor(props: any) {
     super(props);
     this.state = {
       status: this.props.in ? ENTERED : EXITED,
     };
+  }
+
+  componentDidMount() {
+    if (this.context) {
+      const { status } = this.context;
+      if (status === ENTERING) {
+        this.updateStatus(status);
+      }
+    }
   }
 
   componentDidUpdate() {

@@ -28,6 +28,7 @@ function CSSTransition(props) {
     reflowAndRemoveClass(node, [enterClassName, enteringClassName]);
     const enteredClassName = getClassNames("enter").done; //fade-enter-done
     reflowAndAddClass(node, enteredClassName);
+    props.onEntered?.(node);
   };
 
   const onExit = (node) => {
@@ -47,6 +48,7 @@ function CSSTransition(props) {
     reflowAndRemoveClass(node, [exitClassName, exitingClassName]);
     const exitedClassName = getClassNames("exit").done;
     reflowAndAddClass(node, exitedClassName);
+    props.onExited?.(node);
   };
 
   return (

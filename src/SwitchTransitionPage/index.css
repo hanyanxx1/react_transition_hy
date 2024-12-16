@@ -1,0 +1,37 @@
+.panel {
+  opacity: 0;
+}
+
+.panel-enter {
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.panel-enter-active {
+  opacity: 1;
+  transform: translateX(0%);
+  transition:
+    opacity 2000ms,
+    transform 2000ms;
+}
+
+.panel-enter-done {
+  opacity: 1;
+}
+
+.panel-exit {
+  opacity: 1;
+  transform: translateX(0%);
+}
+
+.panel-exit-active {
+  opacity: 0;
+  transform: translateX(100%);
+  transition:
+    opacity 2000ms,
+    transform 2000ms;
+}
+
+.panel-exit-done {
+  opacity: 0;
+}
