@@ -15,7 +15,6 @@ class Transition extends React.Component {
 
   componentDidUpdate() {
     let { status } = this.state;
-    console.log(status);
     //更新后当属性发生改变时更改状态
     if (this.props.in) {
       //in为true时执行进场动画
@@ -37,19 +36,25 @@ class Transition extends React.Component {
   }
 
   performEnter() {
-    const { timeout } = this.props;
+    const { timeout, nodeRef, onEnter, onEntering, onEntered } = this.props;
+    const node = nodeRef;
+    onEnter?.(node);
     this.setState({ status: ENTERING }, () => {
+      onEntering?.(node);
       this.onTransitionEnd(timeout, () => {
-        this.setState({ status: ENTERED });
+        this.setState({ status: ENTERED }, () => onEntered?.(node));
       });
     });
   }
 
   performExit() {
-    const { timeout } = this.props;
+    const { timeout, nodeRef, onExit, onExiting, onExited } = this.props;
+    const node = nodeRef;
+    onExit?.(node);
     this.setState({ status: EXITING }, () => {
+      onExiting?.(node);
       this.onTransitionEnd(timeout, () => {
-        this.setState({ status: EXITED });
+        this.setState({ status: EXITED }, () => onExited?.(node));
       });
     });
   }
@@ -67,7 +72,7 @@ class Transition extends React.Component {
   render() {
     const { children } = this.props;
     const { status } = this.state;
-    return children(status);
+    return typeof children === "function" ? children(status) : children;
   }
 }
 
